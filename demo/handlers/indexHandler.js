@@ -1,3 +1,5 @@
-modules.export = [{
-    index: console.log('index'),
-}]
+module.exports = 
+{
+    index: 'Mon handler index',
+    delete: 'Mon handler delete',
+};

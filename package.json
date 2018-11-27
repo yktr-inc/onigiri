@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/yktr-inc/onigiri/issues"
   },
-  "homepage": "https://github.com/yktr-inc/onigiri#readme"
+  "homepage": "https://github.com/yktr-inc/onigiri#readme",
+  "devDependencies": {}
 }
