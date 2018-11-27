@@ -4,7 +4,10 @@
   "description": "Mini Node MVC Framework",
   "main": "app.js",
   "scripts": {
-    "run": "node src/server.js"
+    "run": "node src/server.js",
+    "lint:demo": "./node_modules/.bin/eslint ./demo",
+    "lint:src": "./node_modules/.bin/eslint ./src",
+    "lint:target": "./node_modules/.bin/eslint --fix"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,9 @@
     "url": "https://github.com/yktr-inc/onigiri/issues"
   },
   "homepage": "https://github.com/yktr-inc/onigiri#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
 }

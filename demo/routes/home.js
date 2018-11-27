@@ -11,12 +11,12 @@ module.exports = [
         method: "POST",
         path: "/",
         handler: indexHandler.index,
-        options: {}
+        options: {},
     },    
     {
         method: "GET",
-        path: "/index/{id}",
+        path: "/index/:id",
         handler: indexHandler.index,
-        options: {}
+        options: {},
     },
 ];
