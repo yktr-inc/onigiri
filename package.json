@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "run": "node src/server.js",
-    "lint:demo": "./node_modules/.bin/eslint ./demo",
-    "lint:src": "./node_modules/.bin/eslint ./src",
+    "lint:code": "./node_modules/.bin/eslint ./onigiri",
+    "lint:demo": "./node_modules/.bin/eslint ./app",
     "lint:target": "./node_modules/.bin/eslint --fix"
   },
   "repository": {
@@ -22,6 +22,10 @@
   "devDependencies": {
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.14.0",
+    "jsdoc": "^3.5.5"
+  },
+  "dependencies": {
+    "dotenv": "^6.2.0"
   }
 }

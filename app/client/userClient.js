@@ -1,0 +1,1 @@
+exports.getUser = id => id;
