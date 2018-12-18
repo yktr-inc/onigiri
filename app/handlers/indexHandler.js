@@ -1,6 +1,16 @@
 const Client = require('../client/userClient');
 
 module.exports = {
-    index: Client.getUser(1),
-    delete: 'Mon handler delete',
+    index(res, req) {
+      
+      const user = Client.getUser(1);
+
+      return {
+        view: 'index',
+        params: { 
+          lol: user 
+        }
+      };
+
+    }
 };

@@ -15,6 +15,7 @@ exports = module.exports = app.Logger = class  {
       case 'req':
         return this._logDispatchReq(info);
       case 'res':
+        return this._logDispatchRes(info);
       case 'handler':
       case 'run':
         return this._logServerRun(info);
@@ -25,6 +26,9 @@ exports = module.exports = app.Logger = class  {
 
   _logDispatchReq(req){
     console.info(`Dispatched request : url: ${req.url}, method: ${req.method}`);
+  }    
+  _logDispatchRes(req){
+    console.info(`Dispatched response : url: ${req.url}, method: ${req.method}`);
   }  
 
   _logError(error){

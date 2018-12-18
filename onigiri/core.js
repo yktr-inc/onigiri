@@ -8,14 +8,10 @@ const Request = require('./request');
 const Router = require('./router');
 const Logger = require('./logger');
 const Response = require('./response');
+const View = require('./view');
 
 const app = {};
 
-
-/**
- * Declaration of all needed methods and classes
- * @type {[type]}
- */
 exports = module.exports = app.Core = class  {
     
     constructor (settings) {
@@ -26,10 +22,10 @@ exports = module.exports = app.Core = class  {
         this.request = new Request();
         this.response = new Response();
         this.logger = new Logger();
+        this.view = new View(settings.template);
         
         this.settings = settings;
         this.server = this._init();
-        
 
         this._debug();
         this._initServerListener();
@@ -58,8 +54,22 @@ exports = module.exports = app.Core = class  {
 
     _dispatchRequest(req, res) {
 
-        this.router._matchRoute(req);
+        const route = this.router._matchRoute(req);
 
+        const handlerRes = route.handler(res, req);
+
+        const view = this._renderView(handlerRes, res);
+
+        this._writeHeaders(res);
+    }
+
+    _renderView(handler, res){
+        const { view, params } = handler;
+        const tpl = this.view.render(view,params);
+        return res.write(tpl);
+    }
+
+    _writeHeaders(res){
         res.write('test');
         res.end();
     }
@@ -72,6 +82,10 @@ exports = module.exports = app.Core = class  {
 
           this.server.on('request', (req, res) => {
             this.logger.trace(req,'req');
+          });              
+
+          this.server.on('response', (req, res) => {
+            this.logger.trace(res,'res');
           });        
         
         }

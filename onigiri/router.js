@@ -4,49 +4,48 @@ const app = {};
 
 const glob = require('glob');
 const path = require('path');
- 
+
 
 exports = module.exports = app.Router = class  {
-  
-    constructor () {
-      this.routes = this._buildRoutesTree();
-    }
 
-    _buildRoutesTree() {
-      return glob.sync('./routes/*.js').map(file => require(path.resolve(file)));
-    }
+  constructor () {
+    this.routes = this._buildRoutesTree();
+  }
 
-    _matchRoute(req) {
+  _buildRoutesTree() {
+    return glob.sync('./routes/*.js').map(file => require(path.resolve(file))).flat(1);
+  }
 
-      let matchedRoute;
+  _matchRoute(req) {
 
-      matchedRoute = this.routes.some(routeEnv => {
+    const { url, method } = req;
 
-        const matchedRoutes = routeEnv.filter(route => this._routeMatcher(route.path, req.url));
-        matchedRoute = matchedRoutes.find(route => route.method === req.method);
-
+    const matchedRoute = this.routes.find(route => this._routeMatcher(route.path,url));
+    
+    if(matchedRoute){
+      if(matchedRoute.method !== method){
+        return false;
+      }else{
         return matchedRoute;
-
-      });
-
-      if (matchedRoute !== undefined) {
-        console.log('200');
-        console.log(matchedRoute);
-      } else {
-        console.log('404');
       }
+      return false;
 
     }
 
-    _routeMatcher(route, url) {
+    return false;
 
-      const explodedRoute = route.split('/');
-      const explodedUrl = url.split('/');
+  }
 
-      explodedRoute.shift();
-      explodedUrl.shift();
+  _routeMatcher(route, url) {
 
-      for (let i = 0; i < explodedUrl.length; i += 1) {
+    const explodedRoute = route.split('/');
+    const explodedUrl = url.split('/');
+
+    explodedRoute.shift();
+    explodedUrl.shift();
+
+    for (let i = 0; i < explodedUrl.length; i += 1) {
+
         // if (typeof explodedRoute[i] === 'undefined') {
         //   break;
         // }
@@ -68,4 +67,4 @@ exports = module.exports = app.Router = class  {
       return false;
     };
 
-};
+  };

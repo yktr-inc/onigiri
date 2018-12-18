@@ -4,7 +4,7 @@
   "description": "Mini Node MVC Framework",
   "main": "app.js",
   "scripts": {
-    "run": "node src/server.js",
+    "dev": "node ./app/app.js",
     "lint:code": "./node_modules/.bin/eslint ./onigiri",
     "lint:demo": "./node_modules/.bin/eslint ./app",
     "lint:target": "./node_modules/.bin/eslint --fix"
