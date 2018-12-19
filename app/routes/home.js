@@ -5,13 +5,17 @@ module.exports = [
         method: "GET",
         path: "/",
         handler: indexHandler.index,
-        options: {}
+        options: {
+            auth: false,
+        }
     },       
     {
-        method: "POST",
-        path: "/",
-        handler: indexHandler.index,
-        options: {},
+        method: "GET",
+        path: "/api",
+        handler: indexHandler.apiResponse,
+        options: {
+            auth: true,
+        }
     },    
     {
         method: "GET",

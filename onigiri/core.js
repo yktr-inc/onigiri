@@ -57,7 +57,7 @@ exports = module.exports = app.Core = class  {
         const route = this.router._matchRoute(req);
 
         const handlerRes = route.handler(res, req);
-
+        
         const view = this._renderView(handlerRes, res);
 
         this._writeHeaders(res);
@@ -70,7 +70,6 @@ exports = module.exports = app.Core = class  {
     }
 
     _writeHeaders(res){
-        res.write('test');
         res.end();
     }
 

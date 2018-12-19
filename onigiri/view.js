@@ -9,7 +9,7 @@ exports = module.exports = app.View = class  {
   }
 
   render(tpl, data) {
-    return this._engine.gateway(tpl, data);
+    return this._engine.render(tpl, data);
   }
 
 };
