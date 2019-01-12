@@ -18,7 +18,7 @@ exports = module.exports = app.Core = class  {
 
         this.dir = process.cwd();
 
-        this.router = new Router();
+        this.router = new Router(settings.workingDir);
         this.request = new Request();
         this.response = new Response();
         this.logger = new Logger();

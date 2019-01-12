@@ -8,12 +8,12 @@ const path = require('path');
 
 exports = module.exports = app.Router = class  {
 
-    constructor () {
-        this.routes = this._buildRoutesTree();
+    constructor (workingDir) {
+        this.routes = this._buildRoutesTree(workingDir);
     }
 
-    _buildRoutesTree() {
-        return glob.sync('./routes/*.js').map(file => require(path.resolve(file))).flat(1);
+    _buildRoutesTree(workingDir) {
+        return glob.sync(`${workingDir}/routes/*.js`).map(file => require(path.resolve(file))).flat(1);
     }
 
     _matchRoute(req) {
