@@ -60,16 +60,25 @@ exports = module.exports = app.Core = class  {
         if(route){
 
             const handlerRes = route.handler(res, req);
-
-            const view = this._renderView(handlerRes, res);
+            if(!route.api){
+              const view = this._renderView(handlerRes, res);
+            }else{
+              console.log(handlerRes);
+              this._writeHeaders(res, route.api.code, route.api.type);
+              this._renderApi(handlerRes, res);
+            }
 
         }else{
             res.write('404');
         }
 
+        res.end();
 
-        this._writeHeaders(res);
 
+    }
+
+    _renderApi(data, res){
+        return res.write(JSON.stringify(data));
     }
 
     _renderView(handler, res){
@@ -78,8 +87,9 @@ exports = module.exports = app.Core = class  {
         return res.write(tpl);
     }
 
-    _writeHeaders(res){
-        res.end();
+    _writeHeaders(res, code, type){
+        res.setHeader("Content-Type", type);
+        res.statusCode = code;
     }
 
     _debug(){
