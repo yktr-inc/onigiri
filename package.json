@@ -4,10 +4,7 @@
   "description": "Mini Node MVC Framework",
   "main": "src/index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/nodemon app/app.js",
-    "lint:code": "./node_modules/.bin/eslint ./onigiri",
-    "lint:demo": "./node_modules/.bin/eslint ./app",
-    "lint:target": "./node_modules/.bin/eslint --fix"
+    "lint": "./node_modules/.bin/eslint ./src"
   },
   "repository": {
     "type": "git",
