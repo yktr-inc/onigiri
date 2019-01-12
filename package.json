@@ -2,7 +2,7 @@
   "name": "onigiri",
   "version": "1.0.0",
   "description": "Mini Node MVC Framework",
-  "main": "app.js",
+  "main": "src/index.js",
   "scripts": {
     "dev": "./node_modules/.bin/nodemon app/app.js",
     "lint:code": "./node_modules/.bin/eslint ./onigiri",
