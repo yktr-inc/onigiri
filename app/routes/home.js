@@ -8,7 +8,7 @@ module.exports = [
         options: {
             auth: false,
         }
-    },       
+    },
     {
         method: "GET",
         path: "/api",
@@ -16,7 +16,7 @@ module.exports = [
         options: {
             auth: true,
         }
-    },    
+    },
     {
         method: "GET",
         path: "/index/:id",

@@ -7,7 +7,7 @@ const dev = process.env.ENV === 'dev';
 
 const templateConf = {
   basedir: 'views',
-  cache: false,
+  cache: true,
 };
 
 const strategy = {

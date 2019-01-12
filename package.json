@@ -4,7 +4,7 @@
   "description": "Mini Node MVC Framework",
   "main": "app.js",
   "scripts": {
-    "dev": "node ./app/app.js",
+    "dev": "./node_modules/.bin/nodemon app/app.js",
     "lint:code": "./node_modules/.bin/eslint ./onigiri",
     "lint:demo": "./node_modules/.bin/eslint ./app",
     "lint:target": "./node_modules/.bin/eslint --fix"
@@ -23,7 +23,8 @@
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "jsdoc": "^3.5.5"
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.18.9"
   },
   "dependencies": {
     "dotenv": "^6.2.0"

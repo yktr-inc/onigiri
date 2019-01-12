@@ -13,7 +13,7 @@ const View = require('./view');
 const app = {};
 
 exports = module.exports = app.Core = class  {
-    
+
     constructor (settings) {
 
         this.dir = process.cwd();
@@ -23,12 +23,13 @@ exports = module.exports = app.Core = class  {
         this.response = new Response();
         this.logger = new Logger();
         this.view = new View(settings.template);
-        
+
         this.settings = settings;
         this.server = this._init();
 
-        this._debug();
         this._initServerListener();
+
+        this._debug();
     }
 
     _init(){
@@ -44,23 +45,31 @@ exports = module.exports = app.Core = class  {
 
     _initServerListener(){
 
-        this.server.on('request', (req, res) => { 
+        this.server.on('request', (req, res) => {
 
             this._dispatchRequest(req, res);
-        
+
         });
-    
+
     }
 
     _dispatchRequest(req, res) {
 
         const route = this.router._matchRoute(req);
 
-        const handlerRes = route.handler(res, req);
-        
-        const view = this._renderView(handlerRes, res);
+        if(route){
+
+            const handlerRes = route.handler(res, req);
+
+            const view = this._renderView(handlerRes, res);
+
+        }else{
+            res.write('404');
+        }
+
 
         this._writeHeaders(res);
+
     }
 
     _renderView(handler, res){
@@ -75,21 +84,21 @@ exports = module.exports = app.Core = class  {
 
     _debug(){
 
-      if(this.settings.debug){
-        
-        if(this.settings.debug.trace){          
+        if(this.settings.debug){
 
-          this.server.on('request', (req, res) => {
-            this.logger.trace(req,'req');
-          });              
+            if(this.settings.debug.trace){
 
-          this.server.on('response', (req, res) => {
-            this.logger.trace(res,'res');
-          });        
-        
+                this.server.on('request', (req) => {
+                    this.logger.trace(req,'req');
+                });
+
+                this.server.on('response', (req, res) => {
+                    this.logger.trace(res,'res');
+                });
+
+            }
+
         }
-
-      }
 
     }
 

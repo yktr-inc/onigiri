@@ -4,13 +4,13 @@ const app = {};
 
 exports = module.exports = app.View = class  {
 
-  constructor(engine) {
-    this._engine = engine;
-  }
+    constructor(engine) {
+        this._engine = engine;
+    }
 
-  render(tpl, data) {
-    return this._engine.render(tpl, data);
-  }
+    render(tpl, data) {
+        return this._engine.render(tpl, data);
+    }
 
 };
 

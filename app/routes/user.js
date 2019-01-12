@@ -6,13 +6,13 @@ module.exports = [
         path: "/users",
         handler: userHandler.users,
         options: {}
-    },    
+    },
     {
         method: "GET",
         path: "/users/:id/edit",
         handler: userHandler.user,
         options: {}
-    },    
+    },
     {
         method: "GET",
         path: "/users/:id/:test",

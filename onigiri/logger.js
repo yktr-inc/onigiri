@@ -6,51 +6,51 @@ const app = {};
 
 exports = module.exports = app.Logger = class  {
 
-  constructor () {
+    constructor () {
 
-  }
-
-  trace(info,type){
-    switch (type) {
-      case 'req':
-        return this._logDispatchReq(info);
-      case 'res':
-        return this._logDispatchRes(info);
-      case 'handler':
-      case 'run':
-        return this._logServerRun(info);
-      default:
-        return null;
     }
-  }
 
-  _logDispatchReq(req){
-    console.info(`Dispatched request : url: ${req.url}, method: ${req.method}`);
-  }    
-  _logDispatchRes(req){
-    console.info(`Dispatched response : url: ${req.url}, method: ${req.method}`);
-  }  
+    trace(info,type){
+        switch (type) {
+        case 'req':
+            return this._logDispatchReq(info);
+        case 'res':
+            return this._logDispatchRes(info);
+        case 'handler':
+        case 'run':
+            return this._logServerRun(info);
+        default:
+            return null;
+        }
+    }
 
-  _logError(error){
-    console.log(`An error occured : ${error}`);
-  }
+    _logDispatchReq(req){
+        console.info(`Dispatched request : url: ${req.url}, method: ${req.method}`);
+    }    
+    _logDispatchRes(req){
+        console.info(`Dispatched response : url: ${req.url}, method: ${req.method}`);
+    }  
 
-  _logServerRun(envSettings){
-    const { host, port } = envSettings;
-    console.info(`Origami server running on ${host}:${port}`);
-  }
+    _logError(error){
+        console.log(`An error occured : ${error}`);
+    }
 
-  _appendLog(msg, env){
-    this._writeLogFile(msg,`var/logs/${env}`);
-  }
+    _logServerRun(envSettings){
+        const { host, port } = envSettings;
+        console.info(`Origami server running on ${host}:${port}`);
+    }
 
-  _appendHttp(msg, env){
-    this._writeLogFile(msg,`var/access/${env}`);
-  }
+    _appendLog(msg, env){
+        this._writeLogFile(msg,`var/logs/${env}`);
+    }
 
-  _writeLogFile(msg, path){
-    fs.appendFile(path, msg, err => { if (err) throw err } );
-  }
+    _appendHttp(msg, env){
+        this._writeLogFile(msg,`var/access/${env}`);
+    }
+
+    _writeLogFile(msg, path){
+        fs.appendFile(path, msg, err => { if (err) throw err; } );
+    }
 
 
 };

@@ -24,7 +24,7 @@ app.Server = class {
     }
 
     strategy() {
-      //handling auth
+        //handling auth
     }
 
 };
