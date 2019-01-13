@@ -55,15 +55,13 @@ exports = module.exports = app.Core = class  {
 
     _dispatchRequest(req, res) {
 
-        const route = this.router._matchRoute(req);
+        const { route, params } = this.router._matchRoute(req);
 
         if(route){
-
-            const handlerRes = route.handler(res, req);
+            const handlerRes = route.handler(res, req, params);
             if(!route.api){
               const view = this._renderView(handlerRes, res);
             }else{
-              console.log(handlerRes);
               this._writeHeaders(res, route.api.code, route.api.type);
               this._renderApi(handlerRes, res);
             }
