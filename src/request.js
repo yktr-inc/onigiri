@@ -1,21 +1,28 @@
 'use strict';
 
-const Router = require('./router');
+const urlModule = require('url');
+
 
 const app = {};
 
 exports = module.exports = app.Request = class  {
 
-    constructor () {
+    _header(res){
 
     }
 
-    _header(res){
-      
-    }    
+    _getRequestParams(req) {
+      const urlInfos = urlModule.parse(req.url, true);
+      console.log(urlInfos);
+      return urlInfos;
+    }
 
-    _body(res){
-      
+    _getBody(res){
+
+    }
+
+    _getQuery(req) {
+
     }
 
 };

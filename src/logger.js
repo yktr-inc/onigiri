@@ -26,10 +26,10 @@ exports = module.exports = app.Logger = class  {
 
     _logDispatchReq(req){
         console.info(`Dispatched request : url: ${req.url}, method: ${req.method}`);
-    }    
+    }
     _logDispatchRes(req){
         console.info(`Dispatched response : url: ${req.url}, method: ${req.method}`);
-    }  
+    }
 
     _logError(error){
         console.log(`An error occured : ${error}`);

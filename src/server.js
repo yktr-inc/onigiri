@@ -27,4 +27,8 @@ app.Server = class {
         //handling auth
     }
 
+    register(event, func){
+      this._core.registerMiddleware({event, func});
+    }
+
 };

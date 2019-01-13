@@ -9,6 +9,7 @@ const Router = require('./router');
 const Logger = require('./logger');
 const Response = require('./response');
 const View = require('./view');
+const Auth = require('./auth');
 
 const app = {};
 
@@ -18,11 +19,17 @@ exports = module.exports = app.Core = class  {
 
         this.dir = process.cwd();
 
+        this.middlewares = {
+          request: [],
+          response: [],
+        };
+
         this.router = new Router(settings.workingDir);
         this.request = new Request();
         this.response = new Response();
         this.logger = new Logger();
         this.view = new View(settings.template);
+        this.auth = new Auth(settings.strategy);
 
         this.settings = settings;
         this.server = this._init();
@@ -30,6 +37,8 @@ exports = module.exports = app.Core = class  {
         this._initServerListener();
 
         this._debug();
+
+        this._runMiddlewares();
     }
 
     _init(){
@@ -44,20 +53,28 @@ exports = module.exports = app.Core = class  {
     }
 
     _initServerListener(){
-
         this.server.on('request', (req, res) => {
-
             this._dispatchRequest(req, res);
-
         });
+        this.server.on('clientError', (err, socket) => {
+          socket.end('HTTP/1.1 400 Bad Request');
+        });
+    }
 
+    registerMiddleware(middleware){
+        this.middlewares[middleware.event].push(middleware.func);
     }
 
     _dispatchRequest(req, res) {
 
         const { route, params } = this.router._matchRoute(req);
-
         if(route){
+
+            this.request._getRequestParams(req);
+
+            if(route.auth){
+                this._checkAuth(req, res);
+            }
             const handlerRes = route.handler(res, req, params);
             if(!route.api){
               const view = this._renderView(handlerRes, res);
@@ -96,17 +113,29 @@ exports = module.exports = app.Core = class  {
 
             if(this.settings.debug.trace){
 
-                this.server.on('request', (req) => {
+                this.server.on('request', (req, res) => {
                     this.logger.trace(req,'req');
-                });
-
-                this.server.on('response', (req, res) => {
-                    this.logger.trace(res,'res');
+                    if(res.finished){
+                      this.logger.trace(res,'res');
+                    }
                 });
 
             }
 
         }
+
+    }
+
+    _runMiddlewares(){
+          this.server.on('request', (req, res) => {
+              this.middlewares.request.forEach(middleware => middleware(req));
+              if(res.finished){
+                this.middlewares.response.forEach(middleware => middleware(res));
+              }
+          });
+    }
+
+    _checkAuth(req, res){
 
     }
 

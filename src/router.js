@@ -52,8 +52,9 @@ exports = module.exports = app.Router = class  {
     }
 
     _getUrlParts(route, url){
+
         const explodedRoute = route.split('/');
-        const explodedUrl = url.split('/');
+        const explodedUrl = url.split('?')[0].split('/');
 
         explodedRoute.shift();
         explodedUrl.shift();

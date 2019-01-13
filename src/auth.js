@@ -4,12 +4,9 @@ const app = {};
 
 exports = module.exports = app.Auth = class  {
 
-    constructor () {
+    constructor (strategy) {
+      this.strategy = strategy;
     }
-
-    _header(res){
-      
-    }    
 
 
 };
