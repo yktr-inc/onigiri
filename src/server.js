@@ -28,7 +28,7 @@ app.Server = class {
     }
 
     register(event, func){
-      this._core.registerMiddleware({event, func});
+        this._core.registerMiddleware({event, func});
     }
 
 };

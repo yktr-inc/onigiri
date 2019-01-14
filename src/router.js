@@ -48,9 +48,9 @@ exports = module.exports = app.Router = class  {
 
         explodedRoute.forEach(
             (part, index)=> {
-              if(part.slice(0, 1) === ':'){
-                params[part.substring(1)] = explodedUrl[index];
-              }
+                if(part.slice(0, 1) === ':'){
+                    params[part.substring(1)] = explodedUrl[index];
+                }
             }
         );
         return params;
@@ -58,7 +58,7 @@ exports = module.exports = app.Router = class  {
 
     _getExplodedUrl(url){
 
-        url = ( url.slice(-1) === "/" && url.length > 1 ) ? url.slice(0, -1) : url;
+        url = ( url.slice(-1) === '/' && url.length > 1 ) ? url.slice(0, -1) : url;
 
         const explodedUrl = url.split('?')[0].split('/');
 

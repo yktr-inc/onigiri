@@ -20,8 +20,8 @@ exports = module.exports = app.Core = class  {
         this.dir = process.cwd();
 
         this.middlewares = {
-          request: [],
-          response: [],
+            request: [],
+            response: [],
         };
 
         this.router = new Router(settings.workingDir);
@@ -57,7 +57,7 @@ exports = module.exports = app.Core = class  {
             this._dispatchRequest(req, res);
         });
         this.server.on('clientError', (err, socket) => {
-          socket.end('HTTP/1.1 400 Bad Request');
+            socket.end('HTTP/1.1 400 Bad Request');
         });
     }
 
@@ -77,10 +77,10 @@ exports = module.exports = app.Core = class  {
             }
             const handlerRes = route.handler(res, req, params);
             if(!route.api){
-              const view = this._renderView(handlerRes, res);
+                const view = this._renderView(handlerRes, res);
             }else{
-              this._writeHeaders(res, route.api.code, route.api.type);
-              this._renderApi(handlerRes, res);
+                this._writeHeaders(res, route.api.code, route.api.type);
+                this._renderApi(handlerRes, res);
             }
 
         }else{
@@ -104,7 +104,7 @@ exports = module.exports = app.Core = class  {
     }
 
     _writeHeaders(res, code, type){
-        res.setHeader("Content-Type", type);
+        res.setHeader('Content-Type', type);
         res.statusCode = code;
     }
 
@@ -117,7 +117,7 @@ exports = module.exports = app.Core = class  {
                 this.server.on('request', (req, res) => {
                     this.logger.trace(req,'req');
                     if(res.finished){
-                      this.logger.trace(req,'res');
+                        this.logger.trace(req,'res');
                     }
                 });
 
@@ -128,12 +128,12 @@ exports = module.exports = app.Core = class  {
     }
 
     _runMiddlewares(){
-          this.server.on('request', (req, res) => {
-              this.middlewares.request.forEach(middleware => middleware(req));
-              if(res.finished){
+        this.server.on('request', (req, res) => {
+            this.middlewares.request.forEach(middleware => middleware(req));
+            if(res.finished){
                 this.middlewares.response.forEach(middleware => middleware(res));
-              }
-          });
+            }
+        });
     }
 
     _checkAuth(req, res){
