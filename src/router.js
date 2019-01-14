@@ -10,6 +10,7 @@ exports = module.exports = app.Router = class  {
 
     constructor (workingDir) {
         this.routes = this._buildRoutesTree(workingDir);
+        this.url = null;
     }
 
     _buildRoutesTree(workingDir) {
@@ -20,13 +21,15 @@ exports = module.exports = app.Router = class  {
 
         const { url, method } = req;
 
-        const matchedRoute = this.routes.find(route => this._routeMatcher(route.path,url));
+        this.url = this._getExplodedUrl(url);
+
+        const matchedRoute = this.routes.find(route => this._routeMatcher(route.path));
 
         if(matchedRoute){
             if(matchedRoute.method !== method){
                 return false;
             }else{
-                const params = this._getUriParams(matchedRoute.path, url);
+                const params = this._getUriParams(matchedRoute.path);
                 return { route: matchedRoute, params: params };
             }
             return false;
@@ -36,9 +39,11 @@ exports = module.exports = app.Router = class  {
         return false;
 
     }
-    _getUriParams(routeUrl, url){
+    _getUriParams(routeUrl){
 
-        const { explodedRoute, explodedUrl } = this._getUrlParts(routeUrl, url);
+        const explodedRoute = this._getExplodedRoute(routeUrl);
+        const explodedUrl = this.url;
+
         const params = {};
 
         explodedRoute.forEach(
@@ -51,20 +56,30 @@ exports = module.exports = app.Router = class  {
         return params;
     }
 
-    _getUrlParts(route, url){
+    _getExplodedUrl(url){
 
-        const explodedRoute = route.split('/');
+        url = ( url.slice(-1) === "/" && url.length > 1 ) ? url.slice(0, -1) : url;
+
         const explodedUrl = url.split('?')[0].split('/');
 
-        explodedRoute.shift();
         explodedUrl.shift();
 
-        return {explodedRoute: explodedRoute, explodedUrl: explodedUrl};
+        return explodedUrl;
     }
 
-    _routeMatcher(route, url) {
+    _getExplodedRoute(route){
 
-        const { explodedRoute, explodedUrl } = this._getUrlParts(route, url);
+        const explodedRoute = route.split('/');
+
+        explodedRoute.shift();
+
+        return explodedRoute;
+    }
+
+    _routeMatcher(route) {
+
+        const explodedRoute = this._getExplodedRoute(route);
+        const explodedUrl = this.url;
 
         for (let i = 0; i < explodedUrl.length; i += 1) {
 

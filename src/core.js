@@ -84,7 +84,8 @@ exports = module.exports = app.Core = class  {
             }
 
         }else{
-            res.write('404');
+            this._writeHeaders(res, 404, 'application/json');
+            res.write(JSON.stringify({ error: 404 }));
         }
 
         res.end();
@@ -116,7 +117,7 @@ exports = module.exports = app.Core = class  {
                 this.server.on('request', (req, res) => {
                     this.logger.trace(req,'req');
                     if(res.finished){
-                      this.logger.trace(res,'res');
+                      this.logger.trace(req,'res');
                     }
                 });
 
