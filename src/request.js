@@ -13,7 +13,6 @@ exports = module.exports = app.Request = class  {
 
     _getRequestParams(req) {
         const urlInfos = urlModule.parse(req.url, true);
-        console.log(urlInfos);
         return urlInfos;
     }
 
