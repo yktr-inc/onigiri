@@ -14,7 +14,9 @@ exports = module.exports = app.Router = class  {
     }
 
     _buildRoutesTree(workingDir) {
-        return glob.sync(`${workingDir}/routes/*.js`).map(file => require(path.resolve(file))).flat(1);
+        const files = glob.sync(`${workingDir}/routes/*.js`).map(file => require(path.resolve(file)));
+        console.log(typeof files);
+        return Array.prototype.concat(...files);
     }
 
     _matchRoute(req) {
